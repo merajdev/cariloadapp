@@ -1,5 +1,10 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
+import { logout } from "@/redux/slice/authSlice";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -16,7 +21,15 @@ import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import userImage from "/public/images/Untitled design.jpg"
 import coverImage from "/public/images/about-banner.svg"
 import Image from "next/image";
-
+import { log } from "console";
+interface User {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  isVerified: boolean;
+  isAdmin: boolean;
+}
 // Define the type for the possible views
 type View = "dashboard" | "profile" | "settings";
 
@@ -141,6 +154,30 @@ export const LogoIcon = () => {
 };
 
 const Dashboard = () => {
+const dispatch = useDispatch();
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);;
+  const handelLogout = async () => {
+    try {
+      await axios.get("/api/users/logout");
+      dispatch(logout());
+      router.push("/login");
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+  const getUserDetails = async () => {
+    const res = await axios.get("/api/users/me");
+    if (res.status === 200) {
+      console.log(res.data);
+      setUser(res.data.data);
+    }
+  }
+
+  useEffect(() => {
+    getUserDetails();
+  }, [])
+
   return (
     <div className="flex flex-1 flex-col">
       {/* Content Below Header */}
@@ -162,18 +199,21 @@ const Dashboard = () => {
                 alt="User"
                 className="w-16 rounded-full border-2 border-neutral-700"
               />
-
               <div>
                 <h2 className="text-lg font-semibold text-neutral-900">
-                  Welcome, User Name!
+                  Welcome, {user ? user.firstname : "User"}!
                 </h2>
-                <p className="text-sm text-neutral-700">We're glad to see you.</p>
+                <p className="text-sm text-neutral-700">We&apos;re glad to see you.</p>
               </div>
             </div>
           </div>
         </div>
         <div className="p-2 md:p-10">
           <h1 className="text-xl font-semibold">Dashboard</h1>
+          <button
+            onClick={handelLogout}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg" >
+            Logout</button>
         </div>
         {/* Add your dashboard content here */}
       </div>

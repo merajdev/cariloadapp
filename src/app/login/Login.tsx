@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { UseSelector } from "react-redux";
+import { login } from "@/redux/slice/authSlice";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { cn } from "@/lib/utils";
@@ -9,6 +12,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function Login() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [user, setUser] = React.useState({
         email: "",
@@ -35,6 +39,7 @@ export default function Login() {
             console.log("Login success", response.data);
             if (response.data.success) {
                 router.push("/owner-dashboard"); // Ensure this route exists
+                dispatch(login())
             } else {
                 console.log("Login failed:", response.data.error);
             }

@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { IconBell, IconMenu, IconX } from '@tabler/icons-react';
+import { useSelector } from 'react-redux';
+import { IconBell, IconMenu, IconUser, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 
 export default function Navbar() {
+  const isAuth = useSelector((state: any) => state.auth.isAuthenticated);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -38,12 +40,14 @@ export default function Navbar() {
           <li><a href="/" className="text-neutral-800 flex items-center">FAQs</a></li>
         </ul>
         <div className="hidden lg:flex">
-          <Link href="/signup" className="p-[3px] relative mx-2">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-            <div className="px-4 py-1  bg-white rounded-[6px]  relative group transition duration-200 text-neutral-900 hover:bg-transparent hover:text-white">
-              Signup
-            </div>
-          </Link>
+          {
+            isAuth ? <IconUser className="text-neutral-800 h-5 w-5 flex-shrink-0" /> : <Link href="/signup" className="p-[3px] relative mx-2">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+              <div className="px-4 py-1  bg-white rounded-[6px]  relative group transition duration-200 text-neutral-900 hover:bg-transparent hover:text-white">
+                Signup
+              </div>
+            </Link>
+          }
         </div>
       </div>
       {/* Mobile menu */}
