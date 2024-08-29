@@ -12,7 +12,7 @@ export function HeroSection() {
       text: "for",
     },
     {
-      text: "Loads and Trucks.",
+      text: "Loads and Trucks",
       className: "text-blue-500",
     },
   ];
@@ -29,8 +29,6 @@ export function HeroSection() {
         <button className="w-40 h-10 rounded-xl bg-white text-black border border-black text-sm">
           Signup
         </button>
-
-
       </div>
     </div>
   );

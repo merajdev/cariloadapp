@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { IconBell, IconMenu, IconX } from '@tabler/icons-react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,12 +16,12 @@ export default function Navbar() {
           <h6>CariLoad</h6>
         </div>
         <div className="flex items-center">
-          <button className="md:hidden p-[3px] relative mx-2">
+          <Link href="/signup" className="md:hidden p-[3px] relative mx-2">
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
             <div className="px-4 py-1  bg-white rounded-[6px]  relative group transition duration-200 text-neutral-900 hover:bg-transparent hover:text-white">
               Signup
             </div>
-          </button>
+          </Link>
           <button onClick={toggleMenu} className="lg:hidden">
             {isOpen ? (
               <IconX stroke={1.5} className="text-neutral-800" />
@@ -37,13 +38,12 @@ export default function Navbar() {
           <li><a href="/" className="text-neutral-800 flex items-center">FAQs</a></li>
         </ul>
         <div className="hidden lg:flex">
-
-          <button className="p-[3px] relative">
+          <Link href="/signup" className="p-[3px] relative mx-2">
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-            <div className="px-4 py-2  bg-white rounded-[6px]  relative group transition duration-200 text-neutral-900 hover:bg-transparent hover:text-white">
+            <div className="px-4 py-1  bg-white rounded-[6px]  relative group transition duration-200 text-neutral-900 hover:bg-transparent hover:text-white">
               Signup
             </div>
-          </button>
+          </Link>
         </div>
       </div>
       {/* Mobile menu */}
